@@ -29,26 +29,25 @@ public class DriverService {
     public String getDrivers() {
         DBUtil_Users db = new DBUtil_Users();
         Gson gson = new GsonBuilder().create();
-        return gson.toJson(db.getCustomers());
+        return gson.toJson(db.getDrivers());
     }
-    
     
     @GET
     @Path("/{email}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getCustomer(@PathParam("email") String email) {
+    public String getDriver(@PathParam("email") String email) {
         DBUtil_Users db = new DBUtil_Users();
         Gson gson = new GsonBuilder().create();
-        return gson.toJson(db.getCustomer(email));
+        return gson.toJson(db.getDriver(email));
     }
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addCustomer(String json) {
+    public Response addDriver(String json) {
         Gson gson = new GsonBuilder().create();
         Users u = gson.fromJson(json, Users.class);
         DBUtil_Users db = new DBUtil_Users();
-        boolean result = db.addCustomer(u);    
+        boolean result = db.addDriver(u);    
         if (result) {
             return Response.status(201).entity("Successfully added").build();
         } else {
@@ -58,11 +57,11 @@ public class DriverService {
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateCustomer(String json) {
+    public Response updateDriver(String json) {
         Gson gson = new GsonBuilder().create();
         Users u = gson.fromJson(json, Users.class);
         DBUtil_Users db = new DBUtil_Users();
-        boolean result = db.updateCustomer(u);   
+        boolean result = db.updateDriver(u);   
         System.out.print(u.getPassword());
         if (result) {
             return Response.status(200).entity("Successfully updated").build();
@@ -73,9 +72,9 @@ public class DriverService {
     
     @DELETE
     @Path("/{email}")
-    public Response deleteCustomer(@PathParam("email") String email) {
+    public Response deleteDriver(@PathParam("email") String email) {
         DBUtil_Users db = new DBUtil_Users();
-        boolean result = db.deleteCustomer(email);    
+        boolean result = db.deleteDriver(email);    
         if (result) {
             return Response.status(200).entity("Successfully deleted").build();
         } else {

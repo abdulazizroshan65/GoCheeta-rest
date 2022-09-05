@@ -17,7 +17,7 @@ public class Users {
     private int noOfTrips;
     private String status;
     private int noOfVehicles;
-    private double rating;
+    private int rating;
     
     public Users() {
         this.email = "";
@@ -28,10 +28,10 @@ public class Users {
         this.noOfTrips = 0;
         this.status = "";
         this.noOfVehicles = 1;
-        this.rating = 0.0;
+        this.rating = 0;
     }
 
-    public Users(String email, String password, String name, String branch, String telephone, int noOfTrips, String status, int noOfVehicles, double rating) {
+    public Users(String email, String password, String name, String branch, String telephone, int noOfTrips, String status, int noOfVehicles, int rating) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -107,11 +107,11 @@ public class Users {
         this.noOfVehicles = noOfVehicles;
     }
 
-    public double getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
     
