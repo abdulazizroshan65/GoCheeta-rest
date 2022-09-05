@@ -64,6 +64,24 @@ public class DBUtil_Users {
         return u;
     }
     
+    public Users getAdmin(String email) {
+        Users u = new Users();
+         try {
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM admins WHERE Email='" + email +"'");
+            resultSet.next();
+            
+            u.setEmail(resultSet.getString("email"));
+            u.setPassword(resultSet.getString("password"));
+            u.setName(resultSet.getString("name"));
+            u.setBranch(resultSet.getString("branch"));
+        } catch(Exception e) {
+            System.out.println(e);
+        } 
+        return u;
+    }
+    
     public List<Users> getCustomers() {
         List<Users> customers = new ArrayList<>();
          try {             
@@ -112,6 +130,26 @@ public class DBUtil_Users {
         return drivers;
     }
     
+    public List<Users> getAdmins() {
+        List<Users> admins = new ArrayList<>();
+         try {             
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM admins;");
+            while(resultSet.next()) {
+                Users u = new Users();
+                u.setEmail(resultSet.getString("email"));
+                u.setPassword(resultSet.getString("password"));
+                u.setName(resultSet.getString("name"));
+                u.setBranch(resultSet.getString("branch"));
+                admins.add(u);
+            }
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return admins;
+    }
+    
     public boolean addCustomer(Users u) {
         int rowsAffected = 0;
         try {
@@ -130,6 +168,18 @@ public class DBUtil_Users {
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             Statement statement = conn.createStatement();
             rowsAffected = statement.executeUpdate("INSERT INTO `drivers` VALUES ('" + u.getEmail() + "', '" + u.getPassword() + "', '" + u.getName() + "', '" + u.getBranch() + "', '" + u.getTelephone() + "', '" + u.getStatus() + "', " + u.getNoOfVehicles() + ", " + u.getNoOfTrips() + ", " +u.getRating() + ")");
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return rowsAffected > 0;
+    }
+    
+    public boolean addAdmin(Users u) {
+        int rowsAffected = 0;
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            rowsAffected = statement.executeUpdate("INSERT INTO `admins` VALUES ('" + u.getEmail() + "', '" + u.getPassword() + "', '" + u.getName() + "', '" + u.getBranch() + "')");
         } catch(Exception e) {
             System.out.println(e);
         }
@@ -160,6 +210,18 @@ public class DBUtil_Users {
         return rowsAffected > 0;
     }
     
+    public boolean updateAdmin(Users u) {
+        int rowsAffected = 0;
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            rowsAffected = statement.executeUpdate("UPDATE `admins` SET `Password` = '" + u.getPassword()+ "', `Name` = '" +u.getName()+ "', `Branch` = '" +u.getBranch()+ "' WHERE `Email` = '" + u.getEmail()+ "';");
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return rowsAffected > 0;
+    }
+    
     public boolean deleteCustomer(String email) {
         int rowsAffected = 0;
         try {
@@ -178,6 +240,18 @@ public class DBUtil_Users {
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             Statement statement = conn.createStatement();
             rowsAffected = statement.executeUpdate("DELETE FROM `drivers` WHERE (`Email` = '" + email + "')");
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return rowsAffected > 0;
+    }
+    
+    public boolean deleteAdmin(String email) {
+        int rowsAffected = 0;
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            rowsAffected = statement.executeUpdate("DELETE FROM `admins` WHERE (`Email` = '" + email + "')");
         } catch(Exception e) {
             System.out.println(e);
         }
