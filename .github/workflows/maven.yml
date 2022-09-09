@@ -23,5 +23,4 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      working-directory: abdulazizroshan65/GoCheeta-rest/
       run: mvn -B package --file pom.xml
