@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Abdulaziz
  */
-public class DBUtil_Users {
+public class DBUtil_Management {
     static final String DB_URL = "jdbc:mysql://localhost:3306/gocheeta?autoReconnect=true&useSSL=false";
     static final String USER = "icbt";
     static final String PASS = "icbt";
@@ -57,7 +57,7 @@ public class DBUtil_Users {
             u.setStatus(resultSet.getString("status"));
             u.setNoOfVehicles(resultSet.getInt("NoOfVehicles"));
             u.setNoOfTrips(resultSet.getInt("NoOfTrips"));
-            u.setRating(resultSet.getDouble("rating"));
+            u.setRating(resultSet.getInt("rating"));
         } catch(Exception e) {
             System.out.println(e);
         } 
@@ -121,7 +121,7 @@ public class DBUtil_Users {
                 u.setStatus(resultSet.getString("status"));
                 u.setNoOfTrips(resultSet.getInt("noOfTrips"));
                 u.setNoOfVehicles(resultSet.getInt("noOfVehicles"));
-                u.setRating(resultSet.getDouble("rating"));
+                u.setRating(resultSet.getInt("rating"));
                 drivers.add(u);
             }
         } catch(Exception e) {
