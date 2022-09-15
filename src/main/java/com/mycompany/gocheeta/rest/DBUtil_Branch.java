@@ -1,0 +1,224 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.gocheeta.rest;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *
+ * @author Abdulaziz
+ */
+public class DBUtil_Branch {
+    static final String DB_URL = "jdbc:mysql://localhost:3306/gocheeta?autoReconnect=true&useSSL=false";
+    static final String USER = "icbt";
+    static final String PASS = "icbt";
+    
+    public BranchInfo getBranch(int id) {
+        BranchInfo b = new BranchInfo();
+         try {
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM branch WHERE ID=" + id);
+            resultSet.next();
+            
+            b.setId(resultSet.getInt("id"));
+            b.setName(resultSet.getString("name"));
+            b.setNoOfDrivers(resultSet.getInt("noOfDrivers"));
+            b.setNoOfCustomers(resultSet.getInt("noOfCustomers"));
+            b.setNoOfAdmins(resultSet.getInt("noOfAdmins"));
+            b.setNoOfTrips(resultSet.getInt("noOfTrips"));
+        } catch(Exception e) {
+            System.out.println(e);
+        } 
+        return b;
+    }
+    
+    public BranchInfo getCategory(int id) {
+        BranchInfo b = new BranchInfo();
+         try {
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM category WHERE ID=" + id);
+            resultSet.next();
+            
+            b.setId(resultSet.getInt("id"));
+            b.setType(resultSet.getString("type"));
+            b.setUnitPrice(resultSet.getInt("unitPrice"));
+            b.setPassengers(resultSet.getInt("passengers"));
+        } catch(Exception e) {
+            System.out.println(e);
+        } 
+        return b;
+    }
+    
+    public BranchInfo getVehicle(String plateno) {
+        BranchInfo b = new BranchInfo();
+         try {
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM vehicles WHERE ID=" + plateno);
+            resultSet.next();
+            
+            b.setPlateno(resultSet.getString("plateno"));
+            b.setCategoryId(resultSet.getInt("categoryId"));
+            b.setDriverName(resultSet.getString("driverName"));
+            b.setNoOfTrips(resultSet.getInt("noOfTrips"));
+        } catch(Exception e) {
+            System.out.println(e);
+        } 
+        return b;
+    }
+    
+    public List<BranchInfo> getBranches() {
+        List<BranchInfo> branches = new ArrayList<>();
+         try {             
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM branch;");
+            while(resultSet.next()) {
+                BranchInfo b = new BranchInfo();
+                b.setId(resultSet.getInt("id"));
+                b.setName(resultSet.getString("name"));
+                b.setNoOfDrivers(resultSet.getInt("noOfDrivers"));
+                b.setNoOfCustomers(resultSet.getInt("noOfCustomers"));
+                b.setNoOfAdmins(resultSet.getInt("noOfAdmins"));
+                b.setNoOfTrips(resultSet.getInt("noOfTrips"));
+                branches.add(b);
+            }
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return branches;
+    }    
+    
+    public List<BranchInfo> getCategories() {
+        List<BranchInfo> categories = new ArrayList<>();
+         try {             
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM category;");
+            while(resultSet.next()) {
+                BranchInfo b = new BranchInfo();
+                b.setId(resultSet.getInt("id"));
+                b.setType(resultSet.getString("type"));
+                b.setUnitPrice(resultSet.getInt("unitPrice"));
+                b.setPassengers(resultSet.getInt("passengers"));
+                categories.add(b);
+            }
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return categories;
+    } 
+    
+    public List<BranchInfo> getVehicles() {
+        List<BranchInfo> vehicles = new ArrayList<>();
+         try {             
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM vehicles;");
+            while(resultSet.next()) {
+                BranchInfo b = new BranchInfo();
+                b.setPlateno(resultSet.getString("plateno"));
+                b.setCategoryId(resultSet.getInt("categoryId"));
+                b.setDriverName(resultSet.getString("driverName"));
+                b.setNoOfTrips(resultSet.getInt("noOfTrips"));
+                vehicles.add(b);
+            }
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return vehicles;
+    } 
+    
+    public boolean addCategory(BranchInfo b) {
+        int rowsAffected = 0;
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            rowsAffected = statement.executeUpdate("INSERT INTO `category` VALUES (" + b.getId()+ ", '" + b.getType()+ "', " + b.getUnitPrice()+ ", " + b.getPassengers()+ ")");
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return rowsAffected > 0;
+    }
+    
+    public boolean addVehicle(BranchInfo b) {
+        int rowsAffected = 0;
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            rowsAffected = statement.executeUpdate("INSERT INTO `vehicles` VALUES ('" + b.getPlateno()+ "', " + b.getCategoryId()+ ", '" + b.getDriverName()+ "', " + b.getNoOfTrips()+ ")");
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return rowsAffected > 0;
+    }
+    
+    public boolean updateBranch(BranchInfo b) {
+        int rowsAffected = 0;
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            rowsAffected = statement.executeUpdate("UPDATE `branch` SET `Name` = '" + b.getName()+ "', `NoOfDrivers` = " +b.getNoOfDrivers()+ ", `NoOfCustomers` = " +b.getNoOfCustomers()+ ", `NoOfAdmins` = " +b.getNoOfAdmins()+ ", `NoOfTrips` = " +b.getNoOfTrips()+ " WHERE `ID` = " + b.getId()+ ";");
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return rowsAffected > 0;
+    }
+    
+    public boolean updateCategory(BranchInfo b) {
+        int rowsAffected = 0;
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            rowsAffected = statement.executeUpdate("UPDATE `category` SET `Type` = '" + b.getType()+ "', `Unit Price` = " +b.getUnitPrice()+ ", `Passengers` = " +b.getPassengers()+ " WHERE `ID` = " + b.getId()+ ";");
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return rowsAffected > 0;
+    }
+    
+    public boolean updateVehicle(BranchInfo b) {
+        int rowsAffected = 0;
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            rowsAffected = statement.executeUpdate("UPDATE `vehicles` SET `CategoryID` = " + b.getCategoryId()+ ", `DriverName` = '" +b.getDriverName()+ "', `NoOfTrips` = " +b.getNoOfTrips()+ " WHERE `PlateNo` = '" + b.getPlateno()+ "';");
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return rowsAffected > 0;
+    }
+    
+    public boolean deleteCategory(int id) {
+        int rowsAffected = 0;
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            rowsAffected = statement.executeUpdate("DELETE FROM `category` WHERE (`ID` = " + id + ")");
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return rowsAffected > 0;
+    }
+    
+    public boolean deleteVehicle(String plateno) {
+        int rowsAffected = 0;
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            rowsAffected = statement.executeUpdate("DELETE FROM `vehicle` WHERE (`PlateNo` = '" + plateno + "')");
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return rowsAffected > 0;
+    }
+}
