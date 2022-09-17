@@ -33,14 +33,14 @@ public class BookingService {
     }
     
     
-    @GET
-    @Path("/{email}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getCBookings(@PathParam("email") String email) {
-        DBUtil_Booking util = new DBUtil_Booking();
-        Gson gson = new GsonBuilder().create();
-        return gson.toJson(util.getCBooking(email));
-    }
+//    @GET
+//    @Path("/{email}")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public String getCBookings(@PathParam("email") String email) {
+//        DBUtil_Booking util = new DBUtil_Booking();
+//        Gson gson = new GsonBuilder().create();
+//        return gson.toJson(util.getCBooking(email));
+//    }
     
     @GET
     @Path("/{email}")

@@ -22,27 +22,39 @@ import javax.ws.rs.core.Response;
  *
  * @author Abdulaziz
  */
-@Path("branch")
-public class BranchService {
+@Path("category")
+public class CategoryService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getBranches() {
+    public String getCategories() {
         DBUtil_Branch util = new DBUtil_Branch();
         Gson gson = new GsonBuilder().create();
-        return gson.toJson(util.getBranches());
+        return gson.toJson(util.getCategories());
     }
-    
-    
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getBranch(@PathParam("id") int id) {
+    public String getCategory(@PathParam("id") int id) {
         DBUtil_Branch util = new DBUtil_Branch();
         Gson gson = new GsonBuilder().create();
-        return gson.toJson(util.getBranch(id));
+        return gson.toJson(util.getCategory(id));
     }
     
-    /*@PUT
+    /*@POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addPerson(String json) {
+        Gson gson = new GsonBuilder().create();
+        Student student = gson.fromJson(json, Student.class);
+        DBUtil util = new DBUtil();
+        boolean result = util.addStudent(student);    
+        if (result) {
+            return Response.status(201).entity("Successfully added").build();
+        } else {
+            return Response.status(501).entity("Error occurred").build();
+        }
+    }
+    
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updatePerson(String json) {
         Gson gson = new GsonBuilder().create();
@@ -51,6 +63,18 @@ public class BranchService {
         boolean result = util.updateStudent(student);    
         if (result) {
             return Response.status(200).entity("Successfully updated").build();
+        } else {
+            return Response.status(501).entity("Error occurred").build();
+        }
+    }
+    
+    @DELETE
+    @Path("/{id}")
+    public Response deletePerson(@PathParam("id") int id) {
+        DBUtil util = new DBUtil();
+        boolean result = util.deleteStudent(id);    
+        if (result) {
+            return Response.status(200).entity("Successfully deleted").build();
         } else {
             return Response.status(501).entity("Error occurred").build();
         }

@@ -22,27 +22,26 @@ import javax.ws.rs.core.Response;
  *
  * @author Abdulaziz
  */
-@Path("student")
-public class CabService {
+@Path("vehicle")
+public class VehicleService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getStudents() {
-        DBUtil util = new DBUtil();
+    public String getVehicles() {
+        DBUtil_Branch util = new DBUtil_Branch();
         Gson gson = new GsonBuilder().create();
-        return gson.toJson(util.getStudents());
+        return gson.toJson(util.getVehicles());
     }
-    
     
     @GET
-    @Path("/{id}")
+    @Path("/{plateno}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getStudent(@PathParam("id") int id) {
-        DBUtil util = new DBUtil();
+    public String getVehicle(@PathParam("plateno") String plateno) {
+        DBUtil_Branch util = new DBUtil_Branch();
         Gson gson = new GsonBuilder().create();
-        return gson.toJson(util.getStudent(id));
+        return gson.toJson(util.getVehicle(plateno));
     }
     
-    @POST
+    /*@POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addPerson(String json) {
         Gson gson = new GsonBuilder().create();
@@ -80,5 +79,5 @@ public class CabService {
         } else {
             return Response.status(501).entity("Error occurred").build();
         }
-    }
+    }*/
 }
