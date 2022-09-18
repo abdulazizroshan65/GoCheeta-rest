@@ -22,14 +22,14 @@ import javax.ws.rs.core.Response;
  *
  * @author Abdulaziz
  */
-@Path("charges")
-public class ChargeService {
+@Path("street")
+public class StreetService {
     @GET
-    @Path("/{id}")
+    @Path("/{branch}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getCharge(@PathParam("id") int id) {
+    public String getStreet(@PathParam("branch") String branch) {
         DBUtil_Branch util = new DBUtil_Branch();
         Gson gson = new GsonBuilder().create();
-        return gson.toJson(util.getCharge(id));
+        return gson.toJson(util.getStreet(branch));
     }
 }
