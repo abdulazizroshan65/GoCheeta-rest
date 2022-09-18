@@ -57,7 +57,6 @@ public class DBUtil_Users {
             u.setStatus(resultSet.getString("status"));
             u.setNoOfVehicles(resultSet.getInt("NoOfVehicles"));
             u.setNoOfTrips(resultSet.getInt("NoOfTrips"));
-            u.setRating(resultSet.getDouble("rating"));
         } catch(Exception e) {
             System.out.println(e);
         } 
@@ -121,7 +120,6 @@ public class DBUtil_Users {
                 u.setStatus(resultSet.getString("status"));
                 u.setNoOfTrips(resultSet.getInt("noOfTrips"));
                 u.setNoOfVehicles(resultSet.getInt("noOfVehicles"));
-                u.setRating(resultSet.getDouble("rating"));
                 drivers.add(u);
             }
         } catch(Exception e) {
@@ -167,7 +165,7 @@ public class DBUtil_Users {
         try {
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             Statement statement = conn.createStatement();
-            rowsAffected = statement.executeUpdate("INSERT INTO `drivers` VALUES ('" + u.getEmail() + "', '" + u.getPassword() + "', '" + u.getName() + "', '" + u.getBranch() + "', '" + u.getTelephone() + "', '" + u.getStatus() + "', " + u.getNoOfVehicles() + ", " + u.getNoOfTrips() + ", " +u.getRating() + ")");
+            rowsAffected = statement.executeUpdate("INSERT INTO `drivers` VALUES ('" + u.getEmail() + "', '" + u.getPassword() + "', '" + u.getName() + "', '" + u.getBranch() + "', '" + u.getTelephone() + "', '" + u.getStatus() + "', " + u.getNoOfVehicles() + ", " + u.getNoOfTrips() + ")");
         } catch(Exception e) {
             System.out.println(e);
         }
@@ -203,7 +201,7 @@ public class DBUtil_Users {
         try {
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             Statement statement = conn.createStatement();
-            rowsAffected = statement.executeUpdate("UPDATE `drivers` SET `Password` = '" + u.getPassword()+ "', `Name` = '" +u.getName()+ "', `Branch` = '" +u.getBranch()+ "', `Telephone` = '" +u.getTelephone()+ "', `Status` = '" +u.getStatus()+ "', `NoOfTrips` = " +u.getNoOfTrips()+ ", `NoOfVehicles` = " +u.getNoOfVehicles()+ ", `Rating` = " + u.getRating()+ " WHERE `Email` = '" + u.getEmail()+ "';");
+            rowsAffected = statement.executeUpdate("UPDATE `drivers` SET `Password` = '" + u.getPassword()+ "', `Name` = '" +u.getName()+ "', `Branch` = '" +u.getBranch()+ "', `Telephone` = '" +u.getTelephone()+ "', `Status` = '" +u.getStatus()+ "', `NoOfTrips` = " +u.getNoOfTrips()+ ", `NoOfVehicles` = " +u.getNoOfVehicles()+ " WHERE `Email` = '" + u.getEmail()+ "';");
         } catch(Exception e) {
             System.out.println(e);
         }

@@ -41,13 +41,13 @@ public class VehicleService {
         return gson.toJson(util.getVehicle(plateno));
     }
     
-    /*@POST
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addPerson(String json) {
+    public Response addVehicle(String json) {
         Gson gson = new GsonBuilder().create();
-        Student student = gson.fromJson(json, Student.class);
-        DBUtil util = new DBUtil();
-        boolean result = util.addStudent(student);    
+        BranchInfo vehicle = gson.fromJson(json, BranchInfo.class);
+        DBUtil_Branch util = new DBUtil_Branch();
+        boolean result = util.addVehicle(vehicle);    
         if (result) {
             return Response.status(201).entity("Successfully added").build();
         } else {
@@ -57,11 +57,11 @@ public class VehicleService {
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updatePerson(String json) {
+    public Response updateVehicle(String json) {
         Gson gson = new GsonBuilder().create();
-        Student student = gson.fromJson(json, Student.class);
-        DBUtil util = new DBUtil();
-        boolean result = util.updateStudent(student);    
+        BranchInfo vehicle = gson.fromJson(json, BranchInfo.class);
+        DBUtil_Branch util = new DBUtil_Branch();
+        boolean result = util.updateVehicle(vehicle);    
         if (result) {
             return Response.status(200).entity("Successfully updated").build();
         } else {
@@ -70,14 +70,14 @@ public class VehicleService {
     }
     
     @DELETE
-    @Path("/{id}")
-    public Response deletePerson(@PathParam("id") int id) {
-        DBUtil util = new DBUtil();
-        boolean result = util.deleteStudent(id);    
+    @Path("/{plateno}")
+    public Response deleteVehicle(@PathParam("plateno") String plateno) {
+        DBUtil_Branch util = new DBUtil_Branch();
+        boolean result = util.deleteVehicle(plateno);    
         if (result) {
             return Response.status(200).entity("Successfully deleted").build();
         } else {
             return Response.status(501).entity("Error occurred").build();
         }
-    }*/
+    }
 }

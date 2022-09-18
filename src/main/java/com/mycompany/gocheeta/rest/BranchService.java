@@ -42,17 +42,29 @@ public class BranchService {
         return gson.toJson(util.getBranch(id));
     }
     
-    /*@PUT
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updatePerson(String json) {
+    public Response updateBranch(String json) {
         Gson gson = new GsonBuilder().create();
-        Student student = gson.fromJson(json, Student.class);
-        DBUtil util = new DBUtil();
-        boolean result = util.updateStudent(student);    
+        BranchInfo branch = gson.fromJson(json, BranchInfo.class);
+        DBUtil_Branch util = new DBUtil_Branch();
+        boolean result = util.updateBranch(branch);    
         if (result) {
             return Response.status(200).entity("Successfully updated").build();
         } else {
             return Response.status(501).entity("Error occurred").build();
         }
-    }*/
+    }
+    
+    @DELETE
+    @Path("/{id}")
+    public Response deleteBranch(@PathParam("email") int id) {
+        DBUtil_Branch db = new DBUtil_Branch();
+        boolean result = db.deleteBranch(id);    
+        if (result) {
+            return Response.status(200).entity("Successfully deleted").build();
+        } else {
+            return Response.status(501).entity("Error occurred").build();
+        }
+    }
 }

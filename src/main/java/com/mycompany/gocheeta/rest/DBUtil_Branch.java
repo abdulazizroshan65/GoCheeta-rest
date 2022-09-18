@@ -63,7 +63,7 @@ public class DBUtil_Branch {
          try {
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM vehicles WHERE ID=" + plateno);
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM vehicles WHERE PlateNo='" + plateno +"'");
             resultSet.next();
             
             b.setPlateno(resultSet.getString("plateno"));
@@ -198,6 +198,18 @@ public class DBUtil_Branch {
         return rowsAffected > 0;
     }
     
+    public boolean deleteBranch(int id) {
+        int rowsAffected = 0;
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            rowsAffected = statement.executeUpdate("DELETE FROM `branch` WHERE (`ID` = " + id + ")");
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return rowsAffected > 0;
+    }
+    
     public boolean deleteCategory(int id) {
         int rowsAffected = 0;
         try {
@@ -215,7 +227,7 @@ public class DBUtil_Branch {
         try {
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             Statement statement = conn.createStatement();
-            rowsAffected = statement.executeUpdate("DELETE FROM `vehicle` WHERE (`PlateNo` = '" + plateno + "')");
+            rowsAffected = statement.executeUpdate("DELETE FROM `vehicles` WHERE (`PlateNo` = '" + plateno + "')");
         } catch(Exception e) {
             System.out.println(e);
         }
