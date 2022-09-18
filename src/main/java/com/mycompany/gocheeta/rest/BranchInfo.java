@@ -21,8 +21,13 @@ public class BranchInfo {
     private int noOfDrivers;
     private int noOfCustomers;
     private int noOfAdmins;
+    private int combination;
+    private String branch;
+    private String start;
+    private String stop;
+    private int distance;
 
-    public BranchInfo(int id, String type, int unitPrice, int passengers, String plateno, int categoryId, String driverName, int noOfTrips, String name, int noOfDrivers, int noOfCustomers, int noOfAdmins) {
+    public BranchInfo(int id, String type, int unitPrice, int passengers, String plateno, int categoryId, String driverName, int noOfTrips, String name, int noOfDrivers, int noOfCustomers, int noOfAdmins, int combination, String branch, String start, String stop, int distance) {
         this.id = id;
         this.type = type;
         this.unitPrice = unitPrice;
@@ -35,6 +40,11 @@ public class BranchInfo {
         this.noOfDrivers = noOfDrivers;
         this.noOfCustomers = noOfCustomers;
         this.noOfAdmins = noOfAdmins;
+        this.combination = combination;
+        this.branch = branch;
+        this.start = start;
+        this.stop = stop;
+        this.distance = distance;
     }
     
     public BranchInfo() {
@@ -50,6 +60,11 @@ public class BranchInfo {
         this.noOfDrivers = 0;
         this.noOfCustomers = 0;
         this.noOfAdmins = 0;
+        this.combination = 0;
+        this.branch = "";
+        this.start = "";
+        this.stop = "";
+        this.distance = 0;
     }
 
     public int getId() {
@@ -148,6 +163,44 @@ public class BranchInfo {
         this.noOfAdmins = noOfAdmins;
     }
 
-    
+    public int getCombination() {
+        return combination;
+    }
+
+    public void setCombination(int combination) {
+        this.combination = combination;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getStop() {
+        return stop;
+    }
+
+    public void setStop(String stop) {
+        this.stop = stop;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
 }
 

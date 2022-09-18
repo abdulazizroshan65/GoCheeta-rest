@@ -76,6 +76,27 @@ public class DBUtil_Branch {
         return b;
     }
     
+    public List<BranchInfo> getCharge(String branch) {
+        List<BranchInfo> branches = new ArrayList<>();
+         try {
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM charges WHERE Branch='" + branch +"'");
+            while(resultSet.next()) {
+                BranchInfo b = new BranchInfo();
+                b.setCombination(resultSet.getInt("combination"));
+                b.setBranch(resultSet.getString("branch"));
+                b.setStart(resultSet.getString("start"));
+                b.setStop(resultSet.getString("stop"));
+                b.setDistance(resultSet.getInt("distance"));
+                branches.add(b);
+            };
+        } catch(Exception e) {
+            System.out.println(e);
+        } 
+        return branches;
+    }
+    
     public List<BranchInfo> getBranches() {
         List<BranchInfo> branches = new ArrayList<>();
          try {             
