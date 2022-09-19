@@ -7,6 +7,7 @@ package com.mycompany.gocheeta.rest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +17,11 @@ import java.util.List;
  * @author Abdulaziz
  */
 public class DBUtil_Users {
-    static final String DB_URL = "jdbc:mysql://localhost:3306/gocheeta?autoReconnect=true&useSSL=false";
-    static final String USER = "icbt";
-    static final String PASS = "icbt";
+    private final Statement statement = DBConnect.getInstance().statement;
     
     public Users getCustomer(String email) {
         Users u = new Users();
          try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM customers WHERE Email='" + email +"'");
             resultSet.next();
             
@@ -35,7 +32,7 @@ public class DBUtil_Users {
             u.setTelephone(resultSet.getString("telephone"));
             u.setNoOfTrips(resultSet.getInt("NoOfTrips"));
             u.setStatus(resultSet.getString("status"));
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         } 
         return u;
@@ -44,8 +41,6 @@ public class DBUtil_Users {
     public Users getDriver(String email) {
         Users u = new Users();
          try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM drivers WHERE Email='" + email +"'");
             resultSet.next();
             
@@ -57,7 +52,7 @@ public class DBUtil_Users {
             u.setStatus(resultSet.getString("status"));
             u.setNoOfVehicles(resultSet.getInt("NoOfVehicles"));
             u.setNoOfTrips(resultSet.getInt("NoOfTrips"));
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         } 
         return u;
@@ -66,8 +61,6 @@ public class DBUtil_Users {
     public Users getAdmin(String email) {
         Users u = new Users();
          try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM admins WHERE Email='" + email +"'");
             resultSet.next();
             
@@ -75,7 +68,7 @@ public class DBUtil_Users {
             u.setPassword(resultSet.getString("password"));
             u.setName(resultSet.getString("name"));
             u.setBranch(resultSet.getString("branch"));
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         } 
         return u;
@@ -84,8 +77,6 @@ public class DBUtil_Users {
     public List<Users> getCustomers() {
         List<Users> customers = new ArrayList<>();
          try {             
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM customers;");
             while(resultSet.next()) {
                 Users u = new Users();
@@ -98,7 +89,7 @@ public class DBUtil_Users {
                 u.setStatus(resultSet.getString("status"));
                 customers.add(u);
             }
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e.getMessage());
         }
         return customers;
@@ -107,8 +98,6 @@ public class DBUtil_Users {
     public List<Users> getDrivers() {
         List<Users> drivers = new ArrayList<>();
          try {             
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM drivers;");
             while(resultSet.next()) {
                 Users u = new Users();
@@ -122,7 +111,7 @@ public class DBUtil_Users {
                 u.setNoOfVehicles(resultSet.getInt("noOfVehicles"));
                 drivers.add(u);
             }
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e.getMessage());
         }
         return drivers;
@@ -131,8 +120,6 @@ public class DBUtil_Users {
     public List<Users> getAdmins() {
         List<Users> admins = new ArrayList<>();
          try {             
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM admins;");
             while(resultSet.next()) {
                 Users u = new Users();
@@ -142,7 +129,7 @@ public class DBUtil_Users {
                 u.setBranch(resultSet.getString("branch"));
                 admins.add(u);
             }
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e.getMessage());
         }
         return admins;
@@ -151,10 +138,8 @@ public class DBUtil_Users {
     public boolean addCustomer(Users u) {
         int rowsAffected = 0;
         try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             rowsAffected = statement.executeUpdate("INSERT INTO `customers` VALUES ('" + u.getEmail() + "', '" + u.getPassword() + "', '" + u.getName() + "', '" + u.getBranch() + "', '" + u.getTelephone() + "', " + u.getNoOfTrips() + ", '" + u.getStatus() + "')");
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         }
         return rowsAffected > 0;
@@ -163,10 +148,8 @@ public class DBUtil_Users {
     public boolean addDriver(Users u) {
         int rowsAffected = 0;
         try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             rowsAffected = statement.executeUpdate("INSERT INTO `drivers` VALUES ('" + u.getEmail() + "', '" + u.getPassword() + "', '" + u.getName() + "', '" + u.getBranch() + "', '" + u.getTelephone() + "', '" + u.getStatus() + "', " + u.getNoOfVehicles() + ", " + u.getNoOfTrips() + ")");
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         }
         return rowsAffected > 0;
@@ -175,10 +158,8 @@ public class DBUtil_Users {
     public boolean addAdmin(Users u) {
         int rowsAffected = 0;
         try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             rowsAffected = statement.executeUpdate("INSERT INTO `admins` VALUES ('" + u.getEmail() + "', '" + u.getPassword() + "', '" + u.getName() + "', '" + u.getBranch() + "')");
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         }
         return rowsAffected > 0;
@@ -187,10 +168,8 @@ public class DBUtil_Users {
     public boolean updateCustomer(Users u) {
         int rowsAffected = 0;
         try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             rowsAffected = statement.executeUpdate("UPDATE `customers` SET `Password` = '" + u.getPassword()+ "', `Name` = '" +u.getName()+ "', `Branch` = '" +u.getBranch()+ "', `Telephone` = '" +u.getTelephone()+ "', `NoOfTrips` = " +u.getNoOfTrips()+ ", `Status` = '" +u.getStatus()+ "' WHERE `Email` = '" + u.getEmail()+ "';");
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         }
         return rowsAffected > 0;
@@ -199,10 +178,8 @@ public class DBUtil_Users {
     public boolean updateDriver(Users u) {
         int rowsAffected = 0;
         try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             rowsAffected = statement.executeUpdate("UPDATE `drivers` SET `Password` = '" + u.getPassword()+ "', `Name` = '" +u.getName()+ "', `Branch` = '" +u.getBranch()+ "', `Telephone` = '" +u.getTelephone()+ "', `Status` = '" +u.getStatus()+ "', `NoOfTrips` = " +u.getNoOfTrips()+ ", `NoOfVehicles` = " +u.getNoOfVehicles()+ " WHERE `Email` = '" + u.getEmail()+ "';");
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         }
         return rowsAffected > 0;
@@ -211,10 +188,8 @@ public class DBUtil_Users {
     public boolean updateAdmin(Users u) {
         int rowsAffected = 0;
         try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             rowsAffected = statement.executeUpdate("UPDATE `admins` SET `Password` = '" + u.getPassword()+ "', `Name` = '" +u.getName()+ "', `Branch` = '" +u.getBranch()+ "' WHERE `Email` = '" + u.getEmail()+ "';");
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         }
         return rowsAffected > 0;
@@ -223,10 +198,8 @@ public class DBUtil_Users {
     public boolean deleteCustomer(String email) {
         int rowsAffected = 0;
         try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             rowsAffected = statement.executeUpdate("DELETE FROM `customers` WHERE (`Email` = '" + email + "')");
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         }
         return rowsAffected > 0;
@@ -235,10 +208,8 @@ public class DBUtil_Users {
     public boolean deleteDriver(String email) {
         int rowsAffected = 0;
         try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             rowsAffected = statement.executeUpdate("DELETE FROM `drivers` WHERE (`Email` = '" + email + "')");
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         }
         return rowsAffected > 0;
@@ -247,10 +218,8 @@ public class DBUtil_Users {
     public boolean deleteAdmin(String email) {
         int rowsAffected = 0;
         try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             rowsAffected = statement.executeUpdate("DELETE FROM `admins` WHERE (`Email` = '" + email + "')");
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         }
         return rowsAffected > 0;

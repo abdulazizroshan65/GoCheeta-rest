@@ -7,6 +7,7 @@ package com.mycompany.gocheeta.rest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +17,11 @@ import java.util.List;
  * @author Abdulaziz
  */
 public class DBUtil_Branch {
-    static final String DB_URL = "jdbc:mysql://localhost:3306/gocheeta?autoReconnect=true&useSSL=false";
-    static final String USER = "icbt";
-    static final String PASS = "icbt";
+    private final Statement statement = DBConnect.getInstance().statement;
     
     public BranchInfo getBranch(int id) {
         BranchInfo b = new BranchInfo();
          try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM branch WHERE ID=" + id);
             resultSet.next();
             
@@ -34,7 +31,7 @@ public class DBUtil_Branch {
             b.setNoOfCustomers(resultSet.getInt("noOfCustomers"));
             b.setNoOfAdmins(resultSet.getInt("noOfAdmins"));
             b.setNoOfTrips(resultSet.getInt("noOfTrips"));
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         } 
         return b;
@@ -43,8 +40,6 @@ public class DBUtil_Branch {
     public BranchInfo getCategory(int id) {
         BranchInfo b = new BranchInfo();
          try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM category WHERE ID=" + id);
             resultSet.next();
             
@@ -52,7 +47,7 @@ public class DBUtil_Branch {
             b.setType(resultSet.getString("type"));
             b.setUnitPrice(resultSet.getInt("unitPrice"));
             b.setPassengers(resultSet.getInt("passengers"));
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         } 
         return b;
@@ -61,8 +56,6 @@ public class DBUtil_Branch {
     public BranchInfo getVehicle(String plateno) {
         BranchInfo b = new BranchInfo();
          try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM vehicles WHERE PlateNo='" + plateno +"'");
             resultSet.next();
             
@@ -70,7 +63,7 @@ public class DBUtil_Branch {
             b.setCategoryId(resultSet.getInt("categoryId"));
             b.setDriverName(resultSet.getString("driverName"));
             b.setNoOfTrips(resultSet.getInt("noOfTrips"));
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         } 
         return b;
@@ -79,8 +72,6 @@ public class DBUtil_Branch {
     public List<BranchInfo> getStreet(String branch) {
         List<BranchInfo> branches = new ArrayList<>();
          try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM charges WHERE Branch='" + branch +"'");
             while(resultSet.next()) {
                 BranchInfo b = new BranchInfo();
@@ -91,7 +82,7 @@ public class DBUtil_Branch {
                 b.setDistance(resultSet.getInt("distance"));
                 branches.add(b);
             };
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         } 
         return branches;
@@ -100,8 +91,6 @@ public class DBUtil_Branch {
     public List<BranchInfo> getCharge(int id) {
         List<BranchInfo> branches = new ArrayList<>();
          try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM charges WHERE ID=" + id);
             while(resultSet.next()) {
                 BranchInfo b = new BranchInfo();
@@ -112,7 +101,7 @@ public class DBUtil_Branch {
                 b.setDistance(resultSet.getInt("distance"));
                 branches.add(b);
             };
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         } 
         return branches;
@@ -121,8 +110,6 @@ public class DBUtil_Branch {
     public List<BranchInfo> getBranches() {
         List<BranchInfo> branches = new ArrayList<>();
          try {             
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM branch;");
             while(resultSet.next()) {
                 BranchInfo b = new BranchInfo();
@@ -134,7 +121,7 @@ public class DBUtil_Branch {
                 b.setNoOfTrips(resultSet.getInt("noOfTrips"));
                 branches.add(b);
             }
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e.getMessage());
         }
         return branches;
@@ -143,8 +130,6 @@ public class DBUtil_Branch {
     public List<BranchInfo> getCategories() {
         List<BranchInfo> categories = new ArrayList<>();
          try {             
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM category;");
             while(resultSet.next()) {
                 BranchInfo b = new BranchInfo();
@@ -154,7 +139,7 @@ public class DBUtil_Branch {
                 b.setPassengers(resultSet.getInt("passengers"));
                 categories.add(b);
             }
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e.getMessage());
         }
         return categories;
@@ -163,8 +148,6 @@ public class DBUtil_Branch {
     public List<BranchInfo> getVehicles() {
         List<BranchInfo> vehicles = new ArrayList<>();
          try {             
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM vehicles;");
             while(resultSet.next()) {
                 BranchInfo b = new BranchInfo();
@@ -174,7 +157,7 @@ public class DBUtil_Branch {
                 b.setNoOfTrips(resultSet.getInt("noOfTrips"));
                 vehicles.add(b);
             }
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e.getMessage());
         }
         return vehicles;
@@ -183,10 +166,8 @@ public class DBUtil_Branch {
     public boolean addCategory(BranchInfo b) {
         int rowsAffected = 0;
         try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             rowsAffected = statement.executeUpdate("INSERT INTO `category` VALUES (" + b.getId()+ ", '" + b.getType()+ "', " + b.getUnitPrice()+ ", " + b.getPassengers()+ ")");
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         }
         return rowsAffected > 0;
@@ -195,10 +176,8 @@ public class DBUtil_Branch {
     public boolean addVehicle(BranchInfo b) {
         int rowsAffected = 0;
         try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             rowsAffected = statement.executeUpdate("INSERT INTO `vehicles` VALUES ('" + b.getPlateno()+ "', " + b.getCategoryId()+ ", '" + b.getDriverName()+ "', " + b.getNoOfTrips()+ ")");
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         }
         return rowsAffected > 0;
@@ -207,10 +186,8 @@ public class DBUtil_Branch {
     public boolean updateBranch(BranchInfo b) {
         int rowsAffected = 0;
         try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             rowsAffected = statement.executeUpdate("UPDATE `branch` SET `Name` = '" + b.getName()+ "', `NoOfDrivers` = " +b.getNoOfDrivers()+ ", `NoOfCustomers` = " +b.getNoOfCustomers()+ ", `NoOfAdmins` = " +b.getNoOfAdmins()+ ", `NoOfTrips` = " +b.getNoOfTrips()+ " WHERE `ID` = " + b.getId()+ ";");
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         }
         return rowsAffected > 0;
@@ -219,10 +196,8 @@ public class DBUtil_Branch {
     public boolean updateCategory(BranchInfo b) {
         int rowsAffected = 0;
         try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             rowsAffected = statement.executeUpdate("UPDATE `category` SET `Type` = '" + b.getType()+ "', `Unit Price` = " +b.getUnitPrice()+ ", `Passengers` = " +b.getPassengers()+ " WHERE `ID` = " + b.getId()+ ";");
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         }
         return rowsAffected > 0;
@@ -231,10 +206,8 @@ public class DBUtil_Branch {
     public boolean updateVehicle(BranchInfo b) {
         int rowsAffected = 0;
         try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             rowsAffected = statement.executeUpdate("UPDATE `vehicles` SET `CategoryID` = " + b.getCategoryId()+ ", `DriverName` = '" +b.getDriverName()+ "', `NoOfTrips` = " +b.getNoOfTrips()+ " WHERE `PlateNo` = '" + b.getPlateno()+ "';");
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         }
         return rowsAffected > 0;
@@ -243,10 +216,8 @@ public class DBUtil_Branch {
     public boolean deleteBranch(int id) {
         int rowsAffected = 0;
         try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             rowsAffected = statement.executeUpdate("DELETE FROM `branch` WHERE (`ID` = " + id + ")");
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         }
         return rowsAffected > 0;
@@ -255,10 +226,8 @@ public class DBUtil_Branch {
     public boolean deleteCategory(int id) {
         int rowsAffected = 0;
         try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             rowsAffected = statement.executeUpdate("DELETE FROM `category` WHERE (`ID` = " + id + ")");
-        } catch(Exception e) {
+        } catch(SQLException e) {
             System.out.println(e);
         }
         return rowsAffected > 0;
@@ -267,8 +236,6 @@ public class DBUtil_Branch {
     public boolean deleteVehicle(String plateno) {
         int rowsAffected = 0;
         try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = conn.createStatement();
             rowsAffected = statement.executeUpdate("DELETE FROM `vehicles` WHERE (`PlateNo` = '" + plateno + "')");
         } catch(Exception e) {
             System.out.println(e);
