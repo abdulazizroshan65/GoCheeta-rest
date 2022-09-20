@@ -109,4 +109,14 @@ public class DBUtil_Booking {
         }
         return rowsAffected > 0;
     }
+    
+    public boolean acceptBooking(Bookings bk) {
+        int rowsAffected = 0;
+        try {
+            rowsAffected = statement.executeUpdate("UPDATE `bookings` SET `DateTime` = '" + bk.getDatetime()+ "', `CustomerEmail` = '" +bk.getCustomerEmail()+ "', `DriverEmail` = '" +bk.getDriverEmail()+ "', `VehicleNo` = '" +bk.getVehicleNo()+ "', `Status` = '" +bk.getStatus()+ "', `Pickup` = '" +bk.getPickup()+ "', `Drop` = '" +bk.getDrop()+ "', `Distance` = " +bk.getDistance()+ ", `Fare` = " +bk.getFare()+ ", `Feedback` = '" +bk.getFeedback()+ "' WHERE `ID` = " + bk.getId()+ ";");
+        } catch(SQLException e) {
+            System.out.println(e);
+        }
+        return rowsAffected > 0;
+    }
 }

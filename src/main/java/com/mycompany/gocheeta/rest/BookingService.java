@@ -64,4 +64,18 @@ public class BookingService {
             return Response.status(501).entity("Error occurred").build();
         }
     }
+    
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response acceptBooking(String json) {
+        Gson gson = new GsonBuilder().create();
+        Bookings bk = gson.fromJson(json, Bookings.class);
+        DBUtil_Booking util = new DBUtil_Booking();
+        boolean result = util.acceptBooking(bk);    
+        if (result) {
+            return Response.status(200).entity("Successfully updated").build();
+        } else {
+            return Response.status(501).entity("Error occurred").build();
+        }
+    }
 }
