@@ -50,7 +50,7 @@ public class CustomerService {
         DBUtil_Users db = new DBUtil_Users();
         boolean result = db.addCustomer(u);    
         if (result) {
-            return Response.status(201).entity("Successfully added").build();
+            return Response.status(200).entity("Successfully added").build();
         } else {
             return Response.status(501).entity("Error occurred").build();
         }

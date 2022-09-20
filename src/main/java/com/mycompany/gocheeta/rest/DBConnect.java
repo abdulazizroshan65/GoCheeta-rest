@@ -11,7 +11,7 @@ import sun.jvm.hotspot.utilities.soql.SOQLException;
 
 public class DBConnect {
     private static final DBConnect instance = new DBConnect(); 
-    static final String DB_URL = "jdbc:mysql://localhost:3306/gocheeta?autoReconnect=true&useSSL=false";
+     static final String DB_URL = "jdbc:mysql://localhost:3306/gocheeta?autoReconnect=true&useSSL=false";
      
     static final String USER = "icbt";
     static final String PASS = "icbt";

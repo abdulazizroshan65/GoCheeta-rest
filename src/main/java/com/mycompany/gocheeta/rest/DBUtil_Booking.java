@@ -53,7 +53,7 @@ public class DBUtil_Booking {
     public List<Bookings> getDBookings(String email) {
         List<Bookings> dbookings = new ArrayList<>();
          try {            
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM bookings WHERE DriverEmail='" + email +"'");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM bookings WHERE DriverEmail='" + email +"' AND Status= 'Pending'");
             while(resultSet.next()) {
                 Bookings bk = new Bookings();
                 bk.setId(resultSet.getInt("id"));
@@ -113,7 +113,8 @@ public class DBUtil_Booking {
     public boolean acceptBooking(Bookings bk) {
         int rowsAffected = 0;
         try {
-            rowsAffected = statement.executeUpdate("UPDATE `bookings` SET `DateTime` = '" + bk.getDatetime()+ "', `CustomerEmail` = '" +bk.getCustomerEmail()+ "', `DriverEmail` = '" +bk.getDriverEmail()+ "', `VehicleNo` = '" +bk.getVehicleNo()+ "', `Status` = '" +bk.getStatus()+ "', `Pickup` = '" +bk.getPickup()+ "', `Drop` = '" +bk.getDrop()+ "', `Distance` = " +bk.getDistance()+ ", `Fare` = " +bk.getFare()+ ", `Feedback` = '" +bk.getFeedback()+ "' WHERE `ID` = " + bk.getId()+ ";");
+//            rowsAffected = statement.executeUpdate("UPDATE `bookings` SET `DateTime` = '" + bk.getDatetime()+ "', `CustomerEmail` = '" +bk.getCustomerEmail()+ "', `DriverEmail` = '" +bk.getDriverEmail()+ "', `VehicleNo` = '" +bk.getVehicleNo()+ "', `Status` = '" +bk.getStatus()+ "', `Pickup` = '" +bk.getPickup()+ "', `Drop` = '" +bk.getDrop()+ "', `Distance` = " +bk.getDistance()+ ", `Fare` = " +bk.getFare()+ ", `Feedback` = '" +bk.getFeedback()+ "' WHERE `ID` = " + bk.getId()+ ";");
+            rowsAffected = statement.executeUpdate("UPDATE `bookings` SET `Status` = 'Completed' WHERE `ID` = " + bk.getId()+ ";");
         } catch(SQLException e) {
             System.out.println(e);
         }

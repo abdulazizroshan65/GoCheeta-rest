@@ -224,4 +224,27 @@ public class DBUtil_Users {
         }
         return rowsAffected > 0;
     }
+    
+    public List<Users> getDriversbyFilter() {
+        List<Users> drivers = new ArrayList<>();
+        try {
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM drivers WHERE Status ='Free'");
+            while (resultSet.next()) {
+                Users u = new Users();
+                u.setEmail(resultSet.getString("email"));
+                u.setPassword(resultSet.getString("password"));
+                u.setName(resultSet.getString("name"));
+                u.setBranch(resultSet.getString("branch"));
+                u.setTelephone(resultSet.getString("telephone"));
+                u.setStatus(resultSet.getString("status"));
+                u.setNoOfTrips(resultSet.getInt("noOfTrips"));
+                u.setNoOfVehicles(resultSet.getInt("noOfVehicles"));
+                drivers.add(u);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return drivers;
+    }
+
 }
