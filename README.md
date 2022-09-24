@@ -1,6 +1,6 @@
-# GoCheeta-rest
+# GoCheeta-client
 BSc Degree Assignment for Advanced Programming Module (CIS6003)
-Server Side of Advanced Programming Assignment
+Client Side of Advanced Programming Assignment
 NG/BSCSD/07/01 Abdulaziz Roshan 
 st20251852 Abdulaziz Roshan
 ICBT Campus - Nugegoda
@@ -12,6 +12,6 @@ ICBT Campus - Nugegoda
 4) Set GlassFish version 4.1
 5) Ensure all dependencies are available
 6) Import database backup file from GoCheeta-rest repo https://github.com/abdulazizroshan65/GoCheeta-rest
-7) Edit the database connection user & password from the sever side dbConnect.java file
+7) Change the database connection user & password from the sever side dbConnect.java file
 
 YOU ARE READY TO GO :)

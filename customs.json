@@ -1,0 +1,23 @@
+{
+    "elements": {},
+    "attributes": {
+        "aria-current": {
+            "context": "button"
+        },
+        "background-color": {
+            "context": "div"
+        },
+        "integrity": {
+            "context": "link"
+        },
+        "background-repeat": {
+            "context": "body"
+        },
+        "max-width": {
+            "context": "img"
+        },
+        "position": {
+            "context": "div"
+        }
+    }
+}

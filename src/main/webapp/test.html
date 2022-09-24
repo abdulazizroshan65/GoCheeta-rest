@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>GoCheeta - Test</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script>
+            const curl = "http://localhost:8080/gocheeta-rest/customers/";
+            const durl = "http://localhost:8080/gocheeta-rest/drivers/"; 
+            const aurl = "http://localhost:8080/gocheeta-rest/admins/";  
+            const vurl = "http://localhost:8080/gocheeta-rest/vehicle/"; 
+            function getCustomer() {
+                let email = document.getElementById("txtEmail").value;
+                
+                const options = {
+                    method: "GET"
+                };
+                
+                fetch(curl + email, options)
+                        .then(res => res.json()) //covert response to json
+                        .then(data => {
+                            document.getElementById("txtPassword").value = data.password;
+                            document.getElementById("txtName").value = data.name;
+                            document.getElementById("txtBranch").value = data.branch;
+                            document.getElementById("txtTele").value = data.telephone;
+                            document.getElementById("txtTrips").value = data.noOfTrips;
+                            document.getElementById("txtStatus").value = data.status;
+                });   
+            }
+            
+            function getDriver() {
+                let email = document.getElementById("txtEmail").value;
+                
+                const options = {
+                    method: "GET"
+                };
+                
+                fetch(durl + email, options)
+                        .then(res => res.json()) //covert response to json
+                        .then(data => {
+                            document.getElementById("txtPassword").value = data.password;
+                            document.getElementById("txtName").value = data.name;
+                            document.getElementById("txtBranch").value = data.branch;
+                            document.getElementById("txtTele").value = data.telephone;
+                            document.getElementById("txtStatus").value = data.status;
+                            document.getElementById("txtTrips").value = data.noOfTrips;
+                            document.getElementById("txtVehicles").value = data.noOfVehicles;
+                });   
+            }
+            
+            function getAdmin() {
+                let email = document.getElementById("txtEmail").value;
+                
+                const options = {
+                    method: "GET"
+                };
+                
+                fetch(aurl + email, options)
+                        .then(res => res.json()) //covert response to json
+                        .then(data => {
+                            document.getElementById("txtPassword").value = data.password;
+                            document.getElementById("txtName").value = data.name;
+                            document.getElementById("txtBranch").value = data.branch;
+                });   
+            }
+            
+            function getVehicle() {
+                let plateno = document.getElementById("txtPlateno").value;
+                
+                const options = {
+                    method: "GET"
+                };
+                
+                fetch(vurl + plateno, options)
+                        .then(res => res.json()) //covert response to json
+                        .then(data => {
+                            document.getElementById("txtCID").value = data.categoryId;
+                            document.getElementById("txtDrivername").value = data.driverName;
+                            document.getElementById("txtNoOfTrips2").value = data.noOfTrips;
+                });   
+            }
+            
+            function clearall() {
+                document.getElementById("txtEmail").value = "";
+                document.getElementById("txtPassword").value = "";
+                document.getElementById("txtName").value = "";
+                document.getElementById("txtBranch").value = "";
+                document.getElementById("txtTele").value = "";
+                document.getElementById("txtTrips").value = "";
+                document.getElementById("txtStatus").value = "";
+                document.getElementById("txtVehicles").value = "";
+                document.getElementById("txtRating").value = "";
+            }
+            
+            function addCustomer() {
+                const person = {
+                    "email" : document.getElementById("txtEmail").value,
+                    "password" : document.getElementById("txtPassword").value,
+                    "name" : document.getElementById("txtName").value,
+                    "branch" : document.getElementById("txtBranch").value,
+                    "telephone" : document.getElementById("txtTele").value,
+                    "noOfTrips" : parseInt(document.getElementById("txtTrips").value),
+                    "status" : document.getElementById("txtStatus").value
+                };
+                
+                const options = {
+                    method: "POST",
+                    headers: {
+                        "content-type" : "application/json"
+                    },
+                    body: JSON.stringify(person)
+                };
+                fetch(curl, options);
+            }
+            
+            function addDriver() {
+                const person = {
+                    "email" : document.getElementById("txtEmail").value,
+                    "password" : document.getElementById("txtPassword").value,
+                    "name" : document.getElementById("txtName").value,
+                    "branch" : document.getElementById("txtBranch").value,
+                    "telephone" : document.getElementById("txtTele").value,
+                    "status" : document.getElementById("txtStatus").value,
+                    "noOfTrips" : parseInt(document.getElementById("txtTrips").value),
+                    "noOfVehicles" : parseInt(document.getElementById("txtVehicles").value)
+                };
+                
+                const options = {
+                    method: "POST",
+                    headers: {
+                        "content-type" : "application/json"
+                    },
+                    body: JSON.stringify(person)
+                };
+                fetch(durl, options);
+            }
+            
+            function addAdmin() {
+                const person = {
+                    "email" : document.getElementById("txtEmail").value,
+                    "password" : document.getElementById("txtPassword").value,
+                    "name" : document.getElementById("txtName").value,
+                    "branch" : document.getElementById("txtBranch").value
+                };
+                
+                const options = {
+                    method: "POST",
+                    headers: {
+                        "content-type" : "application/json"
+                    },
+                    body: JSON.stringify(person)
+                };
+                fetch(aurl, options);
+            }
+            
+            function addVehicle() {
+                const person = {
+                    "plateno" : document.getElementById("txtPlateno").value,
+                    "categoryId" : parseInt(document.getElementById("txtCID").value),
+                    "driverName" : document.getElementById("txtDrivername").value,
+                    "noOfTrips" : parseInt(document.getElementById("txtNoOfTrips2").value)
+                };
+                
+                const options = {
+                    method: "POST",
+                    headers: {
+                        "content-type" : "application/json"
+                    },
+                    body: JSON.stringify(person)
+                };
+                fetch(vurl, options);
+            }
+            
+            function updateCustomer() {
+                const person = {
+                    "email" : document.getElementById("txtEmail").value,
+                    "password" : document.getElementById("txtPassword").value,
+                    "name" : document.getElementById("txtName").value,
+                    "branch" : document.getElementById("txtBranch").value,
+                    "telephone" : document.getElementById("txtTele").value,
+                    "noOfTrips" : parseInt(document.getElementById("txtTrips").value),
+                    "status" : document.getElementById("txtStatus").value
+                };
+                
+                const options = {
+                    method: "PUT",
+                    headers: {
+                        "content-type" : "application/json"
+                    },
+                    body: JSON.stringify(person)
+                };
+                fetch(curl, options);
+            }
+            
+            function updateDriver() {
+                const person = {
+                    "email" : document.getElementById("txtEmail").value,
+                    "password" : document.getElementById("txtPassword").value,
+                    "name" : document.getElementById("txtName").value,
+                    "branch" : document.getElementById("txtBranch").value,
+                    "telephone" : document.getElementById("txtTele").value,
+                    "noOfTrips" : parseInt(document.getElementById("txtTrips").value),
+                    "status" : document.getElementById("txtStatus").value,
+                    "noOfVehicles" : parseInt(document.getElementById("txtVehicles").value)
+                };
+                
+                const options = {
+                    method: "PUT",
+                    headers: {
+                        "content-type" : "application/json"
+                    },
+                    body: JSON.stringify(person)
+                };
+                fetch(durl, options);
+            }
+            
+            function updateAdmin() {
+                const person = {
+                    "email" : document.getElementById("txtEmail").value,
+                    "password" : document.getElementById("txtPassword").value,
+                    "name" : document.getElementById("txtName").value,
+                    "branch" : document.getElementById("txtBranch").value
+                };
+                
+                const options = {
+                    method: "PUT",
+                    headers: {
+                        "content-type" : "application/json"
+                    },
+                    body: JSON.stringify(person)
+                };
+                fetch(aurl, options);
+            }
+            
+            function updateVehicle() {
+                const person = {
+                    "plateno" : document.getElementById("txtPlateno").value,
+                    "categoryId" : parseInt(document.getElementById("txtCID").value),
+                    "driverName" : document.getElementById("txtDrivername").value,
+                    "noOfTrips" : parseInt(document.getElementById("txtNoOfTrips2").value)
+                };
+                
+                const options = {
+                    method: "PUT",
+                    headers: {
+                        "content-type" : "application/json"
+                    },
+                    body: JSON.stringify(person)
+                };
+                fetch(vurl, options);
+            }
+            
+            function deleteCustomer() {
+                let email = document.getElementById("txtEmail").value;
+                const options = {
+                    method: "DELETE"
+                };
+                fetch(curl + email, options);
+            }
+            
+            function deleteDriver() {
+                let email = document.getElementById("txtEmail").value;
+                const options = {
+                    method: "DELETE"
+                };
+                fetch(durl + email, options);
+            }
+            
+            function deleteAdmin() {
+                let email = document.getElementById("txtEmail").value;
+                const options = {
+                    method: "DELETE"
+                };
+                fetch(aurl + email, options);
+            }
+            
+            function deleteVehicle() {
+                let plateno = document.getElementById("txtPlateno").value;
+                const options = {
+                    method: "DELETE"
+                };
+                fetch(vurl + plateno, options);
+            }
+            
+        </script>
+    </head>
+    <body>
+        Email : <input type="text" id="txtEmail" />
+        Password : <input type="text" id="txtPassword" />
+        Name : <input type="text" id="txtName" />
+        Branch : <input type="text" id="txtBranch" />
+        <br />        <br />
+        Telephone : <input type="text" id="txtTele" />
+        No of Trips : <input type="text" id="txtTrips" />
+        Status : <input type="text" id="txtStatus" />
+        <br />        <br />
+        No of Vehicles : <input type="text" id="txtVehicles" />
+        <br />        <br />
+        <button id="btnGetCustomer" onclick="getCustomer()">Get Customer</button>
+        <button id="btnAddCustomer" onclick="addCustomer()">Add Customer</button>
+        <button id="btnUpdateCustomer" onclick="updateCustomer()">Update Customer</button>
+        <button id="btnDeleteCustomer" onclick="deleteCustomer()">Delete Customer</button>
+        <br />        <br />
+        <button id="btnGetDriver" onclick="getDriver()">Get Driver</button>
+        <button id="btnAddDriver" onclick="addDriver()">Add Driver</button>
+        <button id="btnUpdateDriver" onclick="updateDriver()">Update Driver</button>
+        <button id="btnDeleteDriver" onclick="deleteDriver()">Delete Driver</button>
+        <br />        <br />
+        <button id="btnGetAdmin" onclick="getAdmin()">Get Admin</button>
+        <button id="btnAddAdmin" onclick="addAdmin()">Add Admin</button>
+        <button id="btnUpdateAdmin" onclick="updateAdmin()">Update Admin</button>
+        <button id="btnDeleteAdmin" onclick="deleteAdmin()">Delete Admin</button>
+        <br />        <br />
+        <button id="btnClearAll" onclick="clearall()">Clear All</button>
+        <br />        <br />
+        <br />        <br />
+        ID : <input type="text" id="txtID" />
+        Name : <input type="text" id="txtName2" />
+        No Of Drivers : <input type="text" id="txtNoOfDrivers" />
+        No Of Customers : <input type="text" id="txtNoOfCustomers" />
+        No Of Admins : <input type="text" id="txtNoOfAdmins" />
+        No Of Trips : <input type="text" id="txtNoOfTrips" />
+        <br />        <br />
+        <button id="btnGetBranch" onclick="getCustomer()">Get Branch</button>
+        <button id="btnAddBranch" onclick="addCustomer()">Add Branch</button>
+        <button id="btnUpdateBranch" onclick="updateCustomer()">Update Branch</button>
+        <button id="btnDeleteBranch" onclick="deleteCustomer()">Delete Branch</button>
+        <br />        <br />
+        <br />        <br />
+        Plate No : <input type="text" id="txtPlateno" />
+        Category ID : <input type="text" id="txtCID" />
+        Driver Name : <input type="text" id="txtDrivername" />
+        No Of Trips : <input type="text" id="txtNoOfTrips2" />
+        <br />        <br />
+        <button id="btnGetVehicle" onclick="getVehicle()">Get Vehicle</button>
+        <button id="btnAddVehicle" onclick="addVehicle()">Add Vehicle</button>
+        <button id="btnUpdateVehicle" onclick="updateVehicle()">Update Vehicle</button>
+        <button id="btnDeleteVehicle" onclick="deleteVehicle()">Delete Vehicle</button>
+    </body>
+</html>
